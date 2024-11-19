@@ -2,6 +2,7 @@ name = "yarnworker"
 account_id = "0487e9070b5a6d045aca0f401d40e967" # Replace with your Cloudflare account ID
 workers_dev = true
 main = "src/worker.js"
+compatibility_date = "2024-11-19" # Replace with the current date
 
 [env.production]
 zone_id = "your-zone-id" # Replace with your Cloudflare zone ID
