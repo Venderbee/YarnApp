@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const yarnDatabaseList = document.getElementById('yarn-database-list');
+  const yarnDatabaseTableBody = document.querySelector('#yarn-database-table tbody');
   const userId = 'unique-user-id'; // Replace with a unique identifier for the user
 
   // Load yarn data from Cloudflare KV
@@ -7,9 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(savedYarnData => {
       savedYarnData.forEach(yarn => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${yarn.name} - ${yarn.color} - ${yarn.quantity} skeins`;
-        yarnDatabaseList.appendChild(listItem);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${yarn.name}</td>
+          <td>${yarn.color}</td>
+          <td>${yarn.quantity}</td>
+        `;
+        yarnDatabaseTableBody.appendChild(row);
       });
     });
 });
