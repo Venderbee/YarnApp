@@ -1,14 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
   const yarnForm = document.getElementById('yarn-form');
   const yarnList = document.getElementById('yarn-list');
+  const userId = 'unique-user-id'; // Replace with a unique identifier for the user
 
-  // Load yarn data from localStorage
-  const savedYarnData = JSON.parse(localStorage.getItem('yarnData')) || [];
-  savedYarnData.forEach(yarn => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${yarn.name} - ${yarn.color} - ${yarn.quantity} skeins`;
-    yarnList.appendChild(listItem);
-  });
+  // Load yarn data from Cloudflare KV
+  fetch(`/load?userId=${userId}`)
+    .then(response => response.json())
+    .then(savedYarnData => {
+      savedYarnData.forEach(yarn => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${yarn.name} - ${yarn.color} - ${yarn.quantity} skeins`;
+        yarnList.appendChild(listItem);
+      });
+    });
 
   yarnForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -21,14 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
     listItem.textContent = `${yarnName} - ${yarnColor} - ${yarnQuantity} skeins`;
     yarnList.appendChild(listItem);
 
-    // Save yarn data to localStorage
+    // Save yarn data to Cloudflare KV
     const yarnData = {
       name: yarnName,
       color: yarnColor,
       quantity: yarnQuantity
     };
-    savedYarnData.push(yarnData);
-    localStorage.setItem('yarnData', JSON.stringify(savedYarnData));
+    fetch('/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, yarnData: [yarnData] })
+    });
 
     yarnForm.reset();
   });
