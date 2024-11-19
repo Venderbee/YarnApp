@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const userId = 'unique-user-id'; // Replace with a unique identifier for the user
 
   // Load yarn data from Cloudflare KV
-  fetch(`/load?userId=${userId}`)
+  fetch(`https://yarnworker.workers.dev/load?userId=${userId}`)
     .then(response => response.json())
     .then(savedYarnData => {
       savedYarnData.forEach(yarn => {
@@ -31,12 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
       color: yarnColor,
       quantity: yarnQuantity
     };
-    fetch('/save', {
+    fetch(`https://yarnworker.workers.dev/save`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ userId, yarnData: [yarnData] })
+      body: JSON.stringify({ userId, yarnData })
     });
 
     yarnForm.reset();
