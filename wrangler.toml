@@ -7,7 +7,6 @@ main = "src/worker.js"
 zone_id = "your-zone-id" # Replace with your Cloudflare zone ID
 route = "https://yarnworker.peanutbug04.workers.dev/*" # Replace with your domain
 
-[kv_namespaces]
 [[kv_namespaces]]
 binding = "YARN_DATA"
 id = "your-kv-namespace-id" # Replace with your KV namespace ID
