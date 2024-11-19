@@ -10,7 +10,7 @@ route = "https://yarnworker.peanutbug04.workers.dev/*" # Replace with your domai
 
 [[kv_namespaces]]
 binding = "YARN_DATA"
-id = "your-kv-namespace-id" # Replace with your KV namespace ID
+id = "1346f75c04894dcb9da02168cd5f79ad" # Replace with your KV namespace ID
 
 [observability.logs]
 enabled = true
