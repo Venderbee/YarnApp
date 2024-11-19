@@ -1,21 +1,16 @@
 name = "yarnworker"
-type = "javascript"
 account_id = "0487e9070b5a6d045aca0f401d40e967" # Replace with your Cloudflare account ID
 workers_dev = true
+main = "src/worker.js"
 
 [env.production]
 zone_id = "your-zone-id" # Replace with your Cloudflare zone ID
-route = "yarnworker.peanutbug04.workers.dev" # Replace with your domain
-
-[vars]
-YARN_DATA = "YARN_DATA"
+route = "https://yarnworker.peanutbug04.workers.dev/*" # Replace with your domain
 
 [kv_namespaces]
+[[kv_namespaces]]
 binding = "YARN_DATA"
-id = "YARN_DATA" # Replace with your KV namespace ID
-
-[build]
-upload = { main = "src/worker.js" }
+id = "your-kv-namespace-id" # Replace with your KV namespace ID
 
 [observability.logs]
 enabled = true
