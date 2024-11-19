@@ -15,9 +15,23 @@
       <h2>Welcome, Crocheters!</h2>
       <p>This app is designed to help you with your crochet projects.</p>
     </section>
+    <section>
+      <h2>Track Your Yarn</h2>
+      <form id="yarn-form">
+        <label for="yarn-name">Yarn Name:</label>
+        <input type="text" id="yarn-name" name="yarn-name" required>
+        <label for="yarn-color">Color:</label>
+        <input type="text" id="yarn-color" name="yarn-color" required>
+        <label for="yarn-quantity">Quantity:</label>
+        <input type="number" id="yarn-quantity" name="yarn-quantity" required>
+        <button type="submit">Add Yarn</button>
+      </form>
+      <ul id="yarn-list"></ul>
+    </section>
   </main>
   <footer>
     <p>&copy; 2024 Crochet App</p>
   </footer>
+  <script src="app.js"></script>
 </body>
 </html>
