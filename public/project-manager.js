@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalProjectName = document.getElementById('modal-project-name');
   const modalProjectPattern = document.getElementById('modal-project-pattern');
   const modalProjectYarn = document.getElementById('modal-project-yarn');
+  const modalProjectDeadline = document.getElementById('modal-project-deadline');
   const modalProjectNotes = document.getElementById('modal-project-notes');
   const saveNotesButton = document.getElementById('save-notes');
   const userId = 'unique-user-id'; // Replace with a unique identifier for the user
@@ -13,14 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentProject = null;
 
   // Load project data from Cloudflare KV
-  fetch(`https://yarnworker.workers.dev/load-projects?userId=${userId}`)
+  fetch(`https://<your-worker-subdomain>.workers.dev/load-projects?userId=${userId}`)
     .then(response => response.json())
     .then(savedProjectData => {
       savedProjectData.forEach(project => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
           <h3>${project.name}</h3>
-          <button class="open-project" data-name="${project.name}" data-pattern="${project.pattern}" data-yarn="${project.yarn}" data-notes="${project.notes || ''}">Open Project</button>
+          <button class="open-project" data-name="${project.name}" data-pattern="${project.pattern}" data-yarn="${project.yarn}" data-deadline="${project.deadline}" data-notes="${project.notes || ''}">Open Project</button>
         `;
         projectList.appendChild(listItem);
       });
@@ -31,17 +32,20 @@ document.addEventListener('DOMContentLoaded', () => {
           const name = event.target.getAttribute('data-name');
           const pattern = event.target.getAttribute('data-pattern');
           const yarn = event.target.getAttribute('data-yarn');
+          const deadline = event.target.getAttribute('data-deadline');
           const notes = event.target.getAttribute('data-notes');
 
           modalProjectName.textContent = name;
           modalProjectPattern.textContent = pattern;
           modalProjectYarn.textContent = yarn;
+          modalProjectDeadline.textContent = deadline;
           modalProjectNotes.value = notes;
 
           currentProject = {
             name,
             pattern,
             yarn,
+            deadline,
             notes
           };
 
@@ -56,11 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectName = document.getElementById('project-name').value;
     const projectPattern = document.getElementById('project-pattern').value;
     const projectYarn = document.getElementById('project-yarn').value;
+    const projectDeadline = document.getElementById('project-deadline').value;
 
     const listItem = document.createElement('li');
     listItem.innerHTML = `
       <h3>${projectName}</h3>
-      <button class="open-project" data-name="${projectName}" data-pattern="${projectPattern}" data-yarn="${projectYarn}" data-notes="">Open Project</button>
+      <button class="open-project" data-name="${projectName}" data-pattern="${projectPattern}" data-yarn="${projectYarn}" data-deadline="${projectDeadline}" data-notes="">Open Project</button>
     `;
     projectList.appendChild(listItem);
 
@@ -69,9 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
       name: projectName,
       pattern: projectPattern,
       yarn: projectYarn,
+      deadline: projectDeadline,
       notes: ''
     };
-    fetch(`https://yarnworker.workers.dev/save-project`, {
+    fetch(`https://<your-worker-subdomain>.workers.dev/save-project`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -86,17 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = event.target.getAttribute('data-name');
       const pattern = event.target.getAttribute('data-pattern');
       const yarn = event.target.getAttribute('data-yarn');
+      const deadline = event.target.getAttribute('data-deadline');
       const notes = event.target.getAttribute('data-notes');
 
       modalProjectName.textContent = name;
       modalProjectPattern.textContent = pattern;
       modalProjectYarn.textContent = yarn;
+      modalProjectDeadline.textContent = deadline;
       modalProjectNotes.value = notes;
 
       currentProject = {
         name,
         pattern,
         yarn,
+        deadline,
         notes
       };
 
@@ -110,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentProject.notes = modalProjectNotes.value;
 
       // Update project data in Cloudflare KV
-      fetch(`https://yarnworker.workers.dev/save-project`, {
+      fetch(`https://<your-worker-subdomain>.workers.dev/save-project`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
