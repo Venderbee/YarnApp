@@ -43,7 +43,7 @@ footer {
 }
 
 /* Button styling */
-button {
+.button {
   background-color: #ff6f91;
   color: white;
   border: none;

@@ -9,7 +9,7 @@
 <body class="flashlight">
   <header>
     <h1>Project Manager</h1>
-    <button onclick="location.href='index.html'">Back to Main Page</button>
+    <button onclick="location.href='index.html'" class="button">Back to Main Page</button>
   </header>
   <main>
     <section>
@@ -23,7 +23,7 @@
         <input type="text" id="project-yarn" name="project-yarn" required>
         <label for="project-deadline">Deadline:</label>
         <input type="date" id="project-deadline" name="project-deadline" required>
-        <button type="submit">Add Project</button>
+        <button type="submit" class="button">Add Project</button>
       </form>
     </section>
     <section>
@@ -33,7 +33,7 @@
   </main>
   <footer>
     <p>&copy; 2024 Crochet App</p>
-    <button onclick="location.href='index.html'">Back to Main Page</button>
+    <button onclick="location.href='index.html'" class="button">Back to Main Page</button>
   </footer>
 
   <!-- Modal for displaying project details -->
@@ -46,7 +46,7 @@
       <p><strong>Deadline:</strong> <span id="modal-project-deadline"></span></p>
       <label for="modal-project-notes">Notes:</label>
       <textarea id="modal-project-notes"></textarea>
-      <button id="save-notes">Save Notes</button>
+      <button id="save-notes" class="button">Save Notes</button>
     </div>
   </div>
 
