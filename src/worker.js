@@ -6,7 +6,11 @@ async function handleRequest(request) {
   const url = new URL(request.url)
   const { pathname } = url
 
-  if (pathname === '/save') {
+  if (pathname === '/') {
+    return new Response(await fetch('https://venderbee.github.io/YarnApp/index.html'), {
+      headers: { 'Content-Type': 'text/html' }
+    })
+  } else if (pathname === '/save') {
     if (request.method === 'POST') {
       const data = await request.json()
       const existingData = await YARN_DATA.get(data.userId)
