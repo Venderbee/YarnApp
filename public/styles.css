@@ -23,6 +23,7 @@ header {
   padding: 1rem;
   text-align: center;
   width: 100%;
+  align-self: center;
 }
 
 main {
@@ -49,6 +50,7 @@ footer {
   border: none;
   padding: 0.75rem 1.5rem;
   text-align: center;
+  align-self: center;
   text-decoration: none;
   display: inline-block;
   font-size: 1rem;
@@ -76,11 +78,11 @@ th, td {
 }
 
 th {
-  background-color: #ffcc99;
+  background-color: #008f7a;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #008e9b;
 }
 
 /* Mobile-friendly adjustments */
