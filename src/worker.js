@@ -38,6 +38,5 @@ async function handleRequest(request) {
     }
   }
 
-  
   return new Response('Not found', { status: 404 })
 }
