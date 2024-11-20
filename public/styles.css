@@ -14,12 +14,12 @@ body, h1, h2, p {
   min-height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #845ec2, #d65db1, #ff6f91, #ff9671, #ffc75f, #f9f871);
+  background: #b688c2;
   color: #333;
 }
 
 header {
-  background-color: #008b74;
+  background-color: #ffe8ff;
   padding: 1rem;
   text-align: center;
   width: 100%;
@@ -44,7 +44,7 @@ main {
 }
 
 footer {
-  background-color: #006554;
+  background-color: #dbc0db;
   text-align: center;
   padding: 1rem;
   width: 100%;
@@ -52,7 +52,7 @@ footer {
 
 /* Button styling */
 .button {
-  background-color: #ff6fbc;
+  background-color: #007c95;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -68,7 +68,7 @@ footer {
 }
 
 button:hover {
-  background-color: #e44c9d;
+  background-color: #007168;
 }
 
 /* Table styling */
