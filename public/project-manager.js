@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentProject = null;
 
   // Load project data from Cloudflare KV
-  fetch(`https://<your-worker-subdomain>.workers.dev/load-projects?userId=${userId}`)
+  fetch(`https://yarnworker.workers.dev/load-projects?userId=${userId}`)
     .then(response => response.json())
     .then(savedProjectData => {
       savedProjectData.forEach(project => {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       yarn: projectYarn,
       notes: ''
     };
-    fetch(`https://<your-worker-subdomain>.workers.dev/save-project`, {
+    fetch(`https://yarnworker.workers.dev/save-project`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentProject.notes = modalProjectNotes.value;
 
       // Update project data in Cloudflare KV
-      fetch(`https://<your-worker-subdomain>.workers.dev/save-project`, {
+      fetch(`https://yarnworker.workers.dev/save-project`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
