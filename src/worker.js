@@ -7,14 +7,15 @@ async function handleRequest(request) {
   const { pathname } = url
 
   if (pathname === '/') {
+    // Serve the main index.html page
     const response = await fetch('https://venderbee.github.io/YarnApp/public/index.html')
     const html = await response.text()
     return new Response(html, {
       headers: { 'Content-Type': 'text/html' }
     })
-  } else if (pathname.startsWith('/public/')) {
-    // Serve static assets from the public directory
-    const response = await fetch(`https://venderbee.github.io/YarnApp${pathname}`)
+  } else if (pathname.endsWith('.html') || pathname.endsWith('.css') || pathname.endsWith('.js') || pathname.endsWith('.png') || pathname.endsWith('.jpg') || pathname.endsWith('.jpeg') || pathname.endsWith('.gif')) {
+    // Serve other static assets and HTML pages
+    const response = await fetch(`https://venderbee.github.io/YarnApp/public${pathname}`)
     if (!response.ok) {
       return new Response('Not found', { status: 404 })
     }
