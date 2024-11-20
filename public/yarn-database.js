@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   const yarnForm = document.getElementById('yarn-form');
   const yarnDatabaseTableBody = document.querySelector('#yarn-database-table tbody');
+  const filterNameInput = document.getElementById('filter-name');
+  const filterColorInput = document.getElementById('filter-color');
+  const filterQuantityInput = document.getElementById('filter-quantity');
   const userId = 'unique-user-id'; // Replace with a unique identifier for the user
 
   // Load yarn data from Cloudflare KV
@@ -49,4 +52,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     yarnForm.reset();
   });
+
+  // Filter function
+  function filterTable() {
+    const filterName = filterNameInput.value.toLowerCase();
+    const filterColor = filterColorInput.value.toLowerCase();
+    const filterQuantity = filterQuantityInput.value;
+
+    const rows = yarnDatabaseTableBody.getElementsByTagName('tr');
+    Array.from(rows).forEach(row => {
+      const nameCell = row.cells[0].textContent.toLowerCase();
+      const colorCell = row.cells[1].textContent.toLowerCase();
+      const quantityCell = row.cells[2].textContent;
+
+      const matchesName = nameCell.includes(filterName);
+      const matchesColor = colorCell.includes(filterColor);
+      const matchesQuantity = filterQuantity === '' || quantityCell === filterQuantity;
+
+      if (matchesName && matchesColor && matchesQuantity) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  // Add event listeners for filter inputs
+  filterNameInput.addEventListener('input', filterTable);
+  filterColorInput.addEventListener('input', filterTable);
+  filterQuantityInput.addEventListener('input', filterTable);
 });
