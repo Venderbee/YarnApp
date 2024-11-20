@@ -6,7 +6,7 @@ body, h1, h2, p {
 }
 
 /* Basic styling */
-.body {
+.flashlight {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center horizontally */
