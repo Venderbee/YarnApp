@@ -6,11 +6,15 @@ compatibility_date = "2024-11-19" # Replace with the current date
 
 [env.production]
 zone_id = "your-zone-id" # Replace with your Cloudflare zone ID
-route = "https://venderbee.github.io/YarnApp/" # Replace with your domain
+route = "https://yarnworker.peanutbug04.workers.dev/*" # Replace with your domain
 
 [[kv_namespaces]]
 binding = "YARN_DATA"
 id = "1346f75c04894dcb9da02168cd5f79ad" # Replace with your KV namespace ID
+
+[[kv_namespaces]]
+binding = "PROJECT_DATA"
+id = "dc6546a18a194971a1c11363d2b94ea5" # Replace with your KV namespace ID
 
 [observability.logs]
 enabled = true

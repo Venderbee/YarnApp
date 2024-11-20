@@ -21,6 +21,21 @@ async function handleRequest(request) {
       const yarnData = await YARN_DATA.get(userId)
       return new Response(yarnData, { status: 200 })
     }
+  } else if (pathname === '/save-project') {
+    if (request.method === 'POST') {
+      const data = await request.json()
+      const existingData = await PROJECT_DATA.get(data.userId)
+      const projectData = existingData ? JSON.parse(existingData) : []
+      projectData.push(data.projectData)
+      await PROJECT_DATA.put(data.userId, JSON.stringify(projectData))
+      return new Response('Project saved', { status: 200 })
+    }
+  } else if (pathname === '/load-projects') {
+    if (request.method === 'GET') {
+      const userId = url.searchParams.get('userId')
+      const projectData = await PROJECT_DATA.get(userId)
+      return new Response(projectData, { status: 200 })
+    }
   }
 
   return new Response('Not found', { status: 404 })
