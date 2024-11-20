@@ -19,11 +19,15 @@ body, h1, h2, p {
 }
 
 header {
+  color: #ddf4ff;
   background-color: #39117e;
   padding: 1rem;
   text-align: center;
   width: 100%;
   align-self: center;
+}
+
+.h1 {
   color: #ddf4ff;
 }
 
