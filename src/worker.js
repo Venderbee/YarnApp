@@ -7,7 +7,7 @@ async function handleRequest(request) {
   const { pathname } = url
 
   if (pathname === '/') {
-    const response = await fetch('https://venderbee.github.io/YarnApp/index.html')
+    const response = await fetch('https://venderbee.github.io/YarnApp/public/index.html')
     const html = await response.text()
     return new Response(html, {
       headers: { 'Content-Type': 'text/html' }
