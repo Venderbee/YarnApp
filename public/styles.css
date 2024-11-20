@@ -14,12 +14,12 @@ body, h1, h2, p {
   min-height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #b688c2;
+  background: #0049b0;
   color: #333;
 }
 
 header {
-  background-color: #80558c;
+  background-color: #39117e;
   padding: 1rem;
   text-align: center;
   width: 100%;
@@ -44,7 +44,7 @@ main {
 }
 
 footer {
-  background-color: #80558c;
+  background-color: #39117e;
   text-align: center;
   padding: 1rem;
   width: 100%;
