@@ -12,6 +12,17 @@ async function handleRequest(request) {
     return new Response(html, {
       headers: { 'Content-Type': 'text/html' }
     })
+  } else if (pathname.startsWith('/public/')) {
+    // Serve static assets from the public directory
+    const response = await fetch(`https://venderbee.github.io/YarnApp${pathname}`)
+    if (!response.ok) {
+      return new Response('Not found', { status: 404 })
+    }
+    const contentType = getContentType(pathname)
+    const asset = await response.text()
+    return new Response(asset, {
+      headers: { 'Content-Type': contentType }
+    })
   } else if (pathname === '/save') {
     if (request.method === 'POST') {
       const data = await request.json()
@@ -45,4 +56,22 @@ async function handleRequest(request) {
   }
 
   return new Response('Not found', { status: 404 })
+}
+
+function getContentType(pathname) {
+  if (pathname.endsWith('.html')) {
+    return 'text/html'
+  } else if (pathname.endsWith('.css')) {
+    return 'text/css'
+  } else if (pathname.endsWith('.js')) {
+    return 'application/javascript'
+  } else if (pathname.endsWith('.png')) {
+    return 'image/png'
+  } else if (pathname.endsWith('.jpg') || pathname.endsWith('.jpeg')) {
+    return 'image/jpeg'
+  } else if (pathname.endsWith('.gif')) {
+    return 'image/gif'
+  } else {
+    return 'application/octet-stream'
+  }
 }
