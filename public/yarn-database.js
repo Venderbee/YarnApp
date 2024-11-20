@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterNameInput = document.getElementById('filter-name');
   const filterColorInput = document.getElementById('filter-color');
   const filterQuantityInput = document.getElementById('filter-quantity');
+  const searchYarnInput = document.getElementById('search-yarn');
   const userId = 'unique-user-id'; // Replace with a unique identifier for the user
 
   // Load yarn data from Cloudflare KV
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterName = filterNameInput.value.toLowerCase();
     const filterColor = filterColorInput.value.toLowerCase();
     const filterQuantity = filterQuantityInput.value;
+    const searchYarn = searchYarnInput.value.toLowerCase();
 
     const rows = yarnDatabaseTableBody.getElementsByTagName('tr');
     Array.from(rows).forEach(row => {
@@ -68,8 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const matchesName = nameCell.includes(filterName);
       const matchesColor = colorCell.includes(filterColor);
       const matchesQuantity = filterQuantity === '' || quantityCell === filterQuantity;
+      const matchesSearch = nameCell.includes(searchYarn) || colorCell.includes(searchYarn) || quantityCell.includes(searchYarn);
 
-      if (matchesName && matchesColor && matchesQuantity) {
+      if (matchesName && matchesColor && matchesQuantity && matchesSearch) {
         row.style.display = '';
       } else {
         row.style.display = 'none';
@@ -81,4 +84,5 @@ document.addEventListener('DOMContentLoaded', () => {
   filterNameInput.addEventListener('input', filterTable);
   filterColorInput.addEventListener('input', filterTable);
   filterQuantityInput.addEventListener('input', filterTable);
+  searchYarnInput.addEventListener('input', filterTable);
 });
