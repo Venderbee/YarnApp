@@ -19,7 +19,7 @@ body, h1, h2, p {
 }
 
 header {
-  background-color: #ffe8ff;
+  background-color: #80558c;
   padding: 1rem;
   text-align: center;
   width: 100%;
@@ -44,7 +44,7 @@ main {
 }
 
 footer {
-  background-color: #dbc0db;
+  background-color: #80558c;
   text-align: center;
   padding: 1rem;
   width: 100%;
