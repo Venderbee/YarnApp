@@ -36,7 +36,7 @@
         <label for="search-yarn">Search Yarn:</label>
         <input type="text" id="search-yarn" placeholder="Search yarn">
       </div>
-      <table id="yarn-database-table">
+      <table id="yarnTable">
         <thead>
           <tr>
             <th>Name</th>
@@ -52,8 +52,43 @@
   </main>
   <footer>
     <p>&copy; 2024 Yarnivores</p>
-    <button onclick="location.href='index.html'" class="button">Back to Main Page</button>
   </footer>
-  <script src="yarn-database.js"></script>
+  <script>
+    // Replace with your Google Sheet ID
+    const SHEET_ID = '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I';
+    const SHEET_RANGE = 'SSmith'; // Adjust this to your sheet name or range
+    const API_KEY = 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDBj3lhnAOMYI86\n8TcoSj2J65XVTtc2T1a+pSN6gJr6b9AWdJXX72kaFWPaXRd5zBKFNigFVAcm3sPZ\nYXAkEDB63H/XDPHofejL+nZEa3/or1Mxcj/DoNEfhdj24hIGqN2X8FvBept0v0AL\nh6vayythO4jtzJ5sCVj24HUaLYgJh8mgh3MNNJw4+porUxd1TgOVGEuRU1H3zvC6\nW1qdm8hUCwgI2TzdXx9iC2aCDgjnXktDpQ+4nmFvg8BkjjZ7Y8BbdA3HE0qlW2L/\nx7hZjPeXgB2JCRhU+66ViV0hITiuyZ1L7eaZ8yxJ+jJj4uiPnONx+14ZUfj0oIui\nZ1sJbhGjAgMBAAECggEAB/VEqdE2yiI8MVGykVsADbgcaHE94vM/H0Z9328DMDHB\nrfKsKH0k5pgji1pReUX9KvHvkkyCoMP+7GSXrjvmKl7/eJGFLqhilmRdUXHUB/aR\nZpKKcZoejvu7UGc6E4EE31bYBuvqEVI9qVuyIqRAy9YdSp2jk9CMklXnKqTdl3ql\n0pXh6ktrxPUX/S1kEooy16toyFhK+NJhAvgXLaJlGcVZ9U1BAGnRe3UNdwyGJ2T6\nVY4CBx0aFBZDAiAg4lGyiotp+HGeAS0/ZQ+lbdPGY1TaSzVCxtU412DbHg05mccE\n7zbOT6PMtuvVIBquIDZhlwcr8zP3NqMshhNrM7fckQKBgQD4jzSHfbNBOKV8koyU\n/DbCuv1i3V9k71PZiXkD6Jgsc/pSaF5stTv6KE6Ux6l2ZCXBnU4WVDQhWY9xXGn9\nI3zwT4jjjOdNneqSeM1nK3l7nddcZt3OwCYKMxIvEzEmS8Saz/OGAljruXqwZu04\no9EBJiCQG+sZ3W16gyzA07mnUQKBgQDHWssbDEROeMTBabXP3SgIknHkyI/+mUmn\nkhFmvfxFWrnBTGCP3iSUmL4b96yd69wq+Il2mgjxix1kChOAaiKuY/7gtEv2rt5y\niN/DYe5pGyBz+x2PZ1NefxeBw/0e+aTXVA077JO14Pc2v12CbBrCeiV7uXqX95KI\n84fRWV/UswKBgDoWnZwckEvpxSL7zMb0uod/07/LJIQeOmZYbmOvdADPiezAX3Dg\nWgf4a4TxtHTqqrg43wrw2s4AdDl1838pUAWJUOB9CYFmKm/Ys4gs7NMq7C24DJZI\n6ZrwnItL3OyqQGQ9vRfQbJ+KVVXsd/wIrMur8Wg8XhFJYlCDX24hDP5BAoGAMojU\ndZ3Nbur0TWcjnHaeYFXnIyyoO8zVu/GuEZJVcatG7TYUQEP6l+SERIirLDkOzaHF\nDtiLLdeq8qIPQX0mH3jfskxh+T1ozDXgKyIXEnO67UuZubFik9C5v75T2tdDrwXy\neN9GrlNBt5IY/Se0PNpDyDJDXmR2s9qv8iSqwzsCgYEAo+H3xBEoqo2DHjUMUQ/C\nxCVyOfx46x1TwYLaiubn+YXcFloeNJ/8CbeiIqN6DXNcuURf6Bz1vYkDJ2P8Rhsm\n+bTNSuh8W1Mw1ekuND10clvW4/96e4PmNZ1P6AWE6cDnontmphPAh8oK3pOmBpEo\nuDNsAaAxiX07+eY9W6aUMkU='; // Add your Google API Key
+
+    // URL for the Google Sheets API
+    const URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_RANGE}?key=${API_KEY}`;
+
+    // Fetch data from the Google Sheet
+    async function fetchYarnData() {
+      try {
+        const response = await fetch(URL);
+        const data = await response.json();
+        populateTable(data.values);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    // Populate the table with data
+    function populateTable(rows) {
+      const tableBody = document.querySelector('#yarnTable tbody');
+      rows.slice(1).forEach(row => {
+        const tableRow = document.createElement('tr');
+        row.forEach(cell => {
+          const tableCell = document.createElement('td');
+          tableCell.textContent = cell || 'N/A'; // Handle empty cells
+          tableRow.appendChild(tableCell);
+        });
+        tableBody.appendChild(tableRow);
+      });
+    }
+
+    // Fetch and display data on load
+    fetchYarnData();
+  </script>
 </body>
 </html>
