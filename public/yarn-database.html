@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yarn Database</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="flashlight">
   <header>
     <h1 class="h1">Yarn Database</h1>
@@ -14,19 +16,46 @@
   <main>
     <section>
       <h2 class="h2">Add Yarn to Your Collection</h2>
-      <form id="yarn-form">
-        <label for="yarn-name">Yarn Name:</label>
-        <input type="text" id="yarn-name" name="yarn-name" required>
-        <label for="yarn-color">Color:</label>
-        <input type="text" id="yarn-color" name="yarn-color" required>
-        <label for="yarn-quantity">Quantity:</label>
-        <input type="number" id="yarn-quantity" name="yarn-quantity" required>
-        <button type="submit" class="button">Add Yarn</button>
-      </form>
+      <div class="button-container">
+        <button class="collapsible">Add New Yarn</button>
+      </div>
+      <div class="form-container">
+        <form id="yarn-form">
+          <label for="yarn-brand">Brand:</label>
+          <input type="text" id="yarn-brand" name="yarn-brand" required>
+          <label for="yarn-sub-brand">Sub-Brand:</label>
+          <input type="text" id="yarn-sub-brand" name="yarn-sub-brand" required>
+          <label for="yarn-material">Material:</label>
+          <input type="text" id="yarn-material" name="yarn-material" required>
+          <label for="yarn-weight">Weight:</label>
+          <input type="text" id="yarn-weight" name="yarn-weight" required>
+          <label for="yarn-color">Color:</label>
+          <input type="text" id="yarn-color" name="yarn-color" required>
+          <label for="yarn-dye-lot">Dye Lot:</label>
+          <input type="text" id="yarn-dye-lot" name="yarn-dye-lot" required>
+          <label for="yarn-partial-balls"># of Partial Balls:</label>
+          <input type="number" id="yarn-partial-balls" name="yarn-partial-balls" required>
+          <label for="yarn-full-skeins"># of Full Skeins:</label>
+          <input type="number" id="yarn-full-skeins" name="yarn-full-skeins" required>
+          <label for="yarn-length">Length of Skein:</label>
+          <input type="text" id="yarn-length" name="yarn-length" required>
+          <label for="yarn-hook-size">Hook Size:</label>
+          <input type="text" id="yarn-hook-size" name="yarn-hook-size" required>
+          <label for="yarn-needle-size">Needle Size:</label>
+          <input type="text" id="yarn-needle-size" name="yarn-needle-size" required>
+          <label for="yarn-projects">Projects:</label>
+          <input type="text" id="yarn-projects" name="yarn-projects" required>
+          <label for="yarn-mom-like">Does Mom Like It?</label>
+          <input type="text" id="yarn-mom-like" name="yarn-mom-like" required>
+          <label for="yarn-store">Store Bought At:</label>
+          <input type="text" id="yarn-store" name="yarn-store" required>
+          <button type="submit" class="button">Add Yarn</button>
+        </form>
+      </div>
     </section>
     <section>
       <h2 class="h2">Your Yarn Collection</h2>
-      <div>
+      <div class="table-container">
         <label for="filter-name">Filter by Name:</label>
         <input type="text" id="filter-name" placeholder="Filter by name">
         <label for="filter-color">Filter by Color:</label>
@@ -35,52 +64,38 @@
         <input type="number" id="filter-quantity" placeholder="Filter by quantity">
         <label for="search-yarn">Search Yarn:</label>
         <input type="text" id="search-yarn" placeholder="Search yarn">
+        <table id="yarnTable">
+          <thead>
+            <tr>
+              <th>Brand</th>
+              <th>Sub-Brand</th>
+              <th>Material</th>
+              <th>Weight</th>
+              <th>Color</th>
+              <th>Dye Lot</th>
+              <th># of Partial Balls</th>
+              <th># of Full Skeins</th>
+              <th>Length of Skein</th>
+              <th>Hook Size</th>
+              <th>Needle Size</th>
+              <th>Projects</th>
+              <th>Does Mom Like It?</th>
+              <th>Store Bought At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Yarn data will be inserted here -->
+          </tbody>
+        </table>
       </div>
-      <table id="yarnTable">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Color</th>
-            <th>Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Yarn data will be inserted here -->
-        </tbody>
-      </table>
     </section>
   </main>
   <footer>
     <p>&copy; 2024 Yarnivores</p>
   </footer>
   <script>
-    // Fetch data from the server
-    async function fetchYarnData() {
-      try {
-        const response = await fetch('/fetch-yarn-data');
-        const data = await response.json();
-        populateTable(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
-    // Populate the table with data
-    function populateTable(rows) {
-      const tableBody = document.querySelector('#yarnTable tbody');
-      rows.slice(1).forEach(row => {
-        const tableRow = document.createElement('tr');
-        row.forEach(cell => {
-          const tableCell = document.createElement('td');
-          tableCell.textContent = cell || 'N/A'; // Handle empty cells
-          tableRow.appendChild(tableCell);
-        });
-        tableBody.appendChild(tableRow);
-      });
-    }
-
-    // Fetch and display data on load
-    fetchYarnData();
+    src = "scripts/yarn_database.js"
   </script>
 </body>
+
 </html>
