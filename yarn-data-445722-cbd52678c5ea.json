@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "yarn-data-445722",
+  "private_key_id": "cbd52678c5ea4570c61ffd26a2bf2186e96b27b6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7uMdlBzMG7VX1\nQ1yHHUQJ0WsLGeh3PhMBjwDeKU7vtNF9Twmjr+cm2uVBgvrVh7ygZ+P4ySqA8F1m\no1PHKR4SKaqF0C+/646I3DBbmitpR6jR809KN++zLfO/ZqVoSE6GYkx5iDnxsDzp\nqGH9/45jyQnPDQXtWY7YFs7LVuet9fEIT0VdUCPUyjKfxYEryGtKLPxNRREvZ/Uq\n7PvdfnXwjEvvq4sTk3hlYwqCeY6nakzO9bFt1/Ln/9jega+FdvmHS92WHh5D7wck\nCzyrcyFQVM3IJ0x9y3/5SKuZE8R0rfZE3Q+C5Ql0cN41GPU5OA6vJ9EKBo1I9z6t\n5eH+E4rbAgMBAAECggEABeJF9wUxlMCApruHSBbjPeQ0qjg+1en6AjJUxnczVFvD\nCzNHK+caDtjilwSUzyI+Mnrp0C+h/OuhHylJuXQw+e8Yu1v/UHvWJQpdxlPqk2td\nv8LpaSagBT+QpHRXr+aVoNcDlaBETK6Hoj1Btl/kZdKfKOsRaf3vdmzJ64wG8/1e\nZxFeKjOWUgKAn5WnIRgjOu5193JYxnOGzpfuPPfIHg9D8z8qEFc68EwPsxwgN9iQ\nFLrgwiopwMkMiDNzbF3bxHcKpVfNl5mwdhwHSAonKm+VRJ47LKAG2k7YYbGhhptX\n3fsQKn/n/viA75gidOqLRZaL/B++0qlS8CNJzMuseQKBgQD+vI2cdnZRpBj/VRhb\ntEyG/ROp1altJ2NRiuJzAVGLrsak8eZY5vCDK2GpzeHTfVfrq0WrvFmEPHmntLf9\nZbuzLo43T1UEcD09JSWVw50n/Hsl78jnqoir/ezAGOFTWexZJTRAb8eHWd30/7KJ\nwY36PyHLUCyy8/EOoSKKPYMRAwKBgQC8pyKRbBBnao+Y7uBnHPkeuIW800BOAMs3\nn3NiwiBb30VUQnyQOU/HEgrZgf77vob0SOSoKDrAI7U4Fx332nz3azrXjyhH3fYz\nSYHMszCnhWYqWAFd1+jPaYCubgViJAQAHlFoaueGhcWfxYpjcY7DejP6okSpstPZ\nARUat5g7SQKBgQD6XR9hlByeCQZ4jY4vM3mzgrD8zv6CRaAb2MDP/4/CFbkvDIE1\nB2WDxfNrDOrTDfKHsgH71Fa23SlEZx4ecwqUBUHJorMQda/6lLPoCiY/0qrGknGH\nH9jMEfnKo6lyXoMo6qP8YOBeazj3Pwie1BlSxxHT3azRBWj60+w6qlJTOQKBgGmC\n2NSYqfwNH08bmypQjAxgi3v2cuqtivsLFQ/RHyQDFdVwchZ/11yxfJv2FtRZ1UTf\nV/OsvF8mGX7LfxlWe7otoPVavd6kB8TbgdspBTdMZr2cBvejgDQw/6WPJzeiiRI/\n4qwRznfwbX1UkHfZ1U0DFftBskFvIQknj9Qnht7xAoGAaWWsms4LE6MWTf7B+aJB\nB06SmScxPse+QmBSiRNZ7avtCySNdql1ONmf0TqS7UhQ22/hhXOgKaSBAZukNrml\nBpDlV3PadP1JlMlejkut2KXVKQSrQXQfl//ISc/5+mxoK9/sD8ICZUtVw/utAkKd\nBDXjmqlfpn2L2iWAPPqfPgU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "clsmith@yarn-data-445722.iam.gserviceaccount.com",
+  "client_id": "108374072496499894378",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/clsmith%40yarn-data-445722.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
