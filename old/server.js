@@ -143,9 +143,29 @@ app.post('/add-project', async (req, res) => {
     // Prepare new row data
     const newRow = [
       req.body['project-name'],
-      req.body['project-pattern'],
-      req.body['project-yarn'],
-      req.body['project-deadline'],
+      req.body['project-type'],
+      req.body['start-date'],
+      req.body['completion-date'],
+      req.body['status'],
+      req.body['deadline'],
+      req.body['pattern-name'],
+      req.body['pattern-source'],
+      req.body['pattern-designer'],
+      req.body['pattern-notes'],
+      req.body['yarn-used'],
+      req.body['hook-size'],
+      req.body['other-tools'],
+      req.body['rows-completed'],
+      req.body['time-spent'],
+      req.body['photo-gallery'],
+      req.body['step-notes'],
+      req.body['color-palette'],
+      req.body['gauge-swatch-info'],
+      req.body['custom-modifications'],
+      req.body['recipient'],
+      req.body['budget'],
+      req.body['difficulty-level'],
+      req.body['tags'],
     ];
 
     console.log('Appending new project row:', newRow);
