@@ -15,64 +15,67 @@
   </header>
   <main>
     <section>
-      <h2 class="h2">Add Yarn to Your Collection</h2>
+      <h2 class="h2">Add New Yarn</h2>
       <div class="button-container">
         <button class="collapsible">Add New Yarn</button>
       </div>
-      <div class="form-container">
+      <div class="form-container" style="display: none;">
         <form id="yarn-form">
-          <label for="yarn-brand">Brand:</label>
+          <label for="yarn-brand">Yarn Brand:</label>
           <input type="text" id="yarn-brand" name="yarn-brand" required>
-          <label for="yarn-sub-brand">Sub-Brand:</label>
-          <input type="text" id="yarn-sub-brand" name="yarn-sub-brand" required>
-          <label for="yarn-material">Material:</label>
+          <label for="yarn-sub-brand">Yarn Sub-Brand:</label>
+          <input type="text" id="yarn-sub-brand" name="yarn-sub-brand">
+          <label for="yarn-material">Yarn Material:</label>
           <input type="text" id="yarn-material" name="yarn-material" required>
-          <label for="yarn-weight">Weight:</label>
+          <label for="yarn-weight">Yarn Weight:</label>
           <input type="text" id="yarn-weight" name="yarn-weight" required>
-          <label for="yarn-color">Color:</label>
+          <label for="yarn-color">Yarn Color:</label>
           <input type="text" id="yarn-color" name="yarn-color" required>
-          <label for="yarn-dye-lot">Dye Lot:</label>
-          <input type="text" id="yarn-dye-lot" name="yarn-dye-lot" required>
-          <label for="yarn-partial-balls"># of Partial Balls:</label>
-          <input type="number" id="yarn-partial-balls" name="yarn-partial-balls" required>
-          <label for="yarn-full-skeins"># of Full Skeins:</label>
-          <input type="number" id="yarn-full-skeins" name="yarn-full-skeins" required>
-          <label for="yarn-length">Length of Skein:</label>
-          <input type="text" id="yarn-length" name="yarn-length" required>
+          <label for="yarn-dye-lot">Yarn Dye Lot:</label>
+          <input type="text" id="yarn-dye-lot" name="yarn-dye-lot">
+          <label for="yarn-partial-balls">Partial Balls:</label>
+          <input type="number" id="yarn-partial-balls" name="yarn-partial-balls">
+          <label for="yarn-full-skeins">Full Skeins:</label>
+          <input type="number" id="yarn-full-skeins" name="yarn-full-skeins">
+          <label for="yarn-length">Yarn Length:</label>
+          <input type="text" id="yarn-length" name="yarn-length">
           <label for="yarn-hook-size">Hook Size:</label>
-          <input type="text" id="yarn-hook-size" name="yarn-hook-size" required>
+          <input type="text" id="yarn-hook-size" name="yarn-hook-size">
           <label for="yarn-needle-size">Needle Size:</label>
-          <input type="text" id="yarn-needle-size" name="yarn-needle-size" required>
+          <input type="text" id="yarn-needle-size" name="yarn-needle-size">
           <label for="yarn-projects">Projects:</label>
-          <input type="text" id="yarn-projects" name="yarn-projects" required>
-          <label for="yarn-mom-like">Does Mom Like It?</label>
-          <input type="text" id="yarn-mom-like" name="yarn-mom-like" required>
-          <label for="yarn-store">Store Bought At:</label>
-          <input type="text" id="yarn-store" name="yarn-store" required>
+          <input type="text" id="yarn-projects" name="yarn-projects">
+          <label for="yarn-mom-like">Mom Like:</label>
+          <input type="text" id="yarn-mom-like" name="yarn-mom-like">
+          <label for="yarn-store">Store:</label>
+          <input type="text" id="yarn-store" name="yarn-store">
           <button type="submit" class="button">Add Yarn</button>
         </form>
       </div>
     </section>
     <section>
       <h2 class="h2">Your Yarn Collection</h2>
-      <div class="table-container">
+      <div class="button-container">
+        <button class="collapsible">Show/Hide Yarn Collection</button>
+      </div>
+      <div class="table-container" style="display: none;">
         <table id="yarnTable">
           <thead>
             <tr>
-              <th>Brand</th>
-              <th>Sub-Brand</th>
-              <th>Material</th>
-              <th>Weight</th>
-              <th>Color</th>
-              <th>Dye Lot</th>
-              <th># of Partial Balls</th>
-              <th># of Full Skeins</th>
-              <th>Length of Skein</th>
+              <th>Yarn Brand</th>
+              <th>Yarn Sub-Brand</th>
+              <th>Yarn Material</th>
+              <th>Yarn Weight</th>
+              <th>Yarn Color</th>
+              <th>Yarn Dye Lot</th>
+              <th>Partial Balls</th>
+              <th>Full Skeins</th>
+              <th>Yarn Length</th>
               <th>Hook Size</th>
               <th>Needle Size</th>
               <th>Projects</th>
-              <th>Does Mom Like It?</th>
-              <th>Store Bought At</th>
+              <th>Mom Like</th>
+              <th>Store</th>
             </tr>
           </thead>
           <tbody>
@@ -84,8 +87,9 @@
   </main>
   <footer>
     <p>&copy; 2024 Yarnivores</p>
+    <button onclick="location.href='index.html'" class="button">Back to Main Page</button>
   </footer>
-  <script> src = "../scripts/scripts/yarn_database.js" </script>
+  <script src="../scripts/yarn-database.js"></script>
 </body>
 
 </html>
