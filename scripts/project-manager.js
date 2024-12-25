@@ -1,7 +1,7 @@
 // Fetch data from the server
 async function fetchProjectData() {
   try {
-    const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects?key=YOUR_API_KEY');
+    const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects?key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8');
     const data = await response.json();
     populateProjectTable(data.values);
   } catch (error) {
