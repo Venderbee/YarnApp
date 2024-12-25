@@ -2,7 +2,13 @@
 async function fetchYarnData() {
   try {
     const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithYarn?key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
+    if (!data.values) {
+      throw new Error('No data found in the response');
+    }
     populateYarnTable(data.values);
   } catch (error) {
     console.error('Error fetching data:', error);
