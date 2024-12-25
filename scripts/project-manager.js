@@ -102,16 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('Form toggle button not found');
   }
 
-  // Toggle table visibility
-  const tableToggleButton = document.querySelectorAll('.collapsible')[1];
-  if (tableToggleButton) {
-    tableToggleButton.addEventListener('click', function() {
-      const tableContainer = document.querySelector('.table-container');
-      tableContainer.style.display = tableContainer.style.display === 'none' ? 'block' : 'none';
-    });
-  } else {
-    console.error('Table toggle button not found');
-  }
+
 
   // Handle form submission
   const projectForm = document.querySelector('#project-form');
