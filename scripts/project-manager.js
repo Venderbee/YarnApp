@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Handle form submission
-  document.querySelector('#project-form').addEventListener('submit', async function(event) {
+  document.querySelector('#project-form').addEventListener('click', async function(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
