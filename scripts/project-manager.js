@@ -1,12 +1,46 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM fully loaded and parsed');
 
+  // Load the Google API client library
+  gapi.load('client:auth2', initClient);
+
+  function initClient() {
+    gapi.client.init({
+      apiKey: 'AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8',
+      clientId: '1058604367745-v8mu9pbdpicgn5m20rqho8si5n1qof9n.apps.googleusercontent.com',
+      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+      scope: 'https://www.googleapis.com/auth/spreadsheets',
+    }).then(function () {
+      // Listen for sign-in state changes.
+      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+      // Handle the initial sign-in state.
+      updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    }, function(error) {
+      console.error('Error initializing Google API client:', error);
+    });
+  }
+
+  function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) {
+      console.log('User is signed in');
+      fetchYarnData();
+      fetchProjectData();
+    } else {
+      console.log('User is not signed in');
+      gapi.auth2.getAuthInstance().signIn();
+    }
+  }
+
   // Fetch yarn data from the server
   async function fetchYarnData() {
     try {
       console.log('Fetching yarn data...');
-      const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithYarn?key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8');
-      const data = await response.json();
+      const response = await gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+        range: 'SSmithYarn',
+      });
+      const data = response.result;
       console.log('Yarn data fetched:', data);
       populateYarnDropdown(data.values);
     } catch (error) {
@@ -31,8 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
   async function fetchProjectData() {
     try {
       console.log('Fetching project data...');
-      const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects?key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8');
-      const data = await response.json();
+      const response = await gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+        range: 'SSmithProjects',
+      });
+      const data = response.result;
       console.log('Project data fetched:', data);
       populateProjectTable(data.values);
     } catch (error) {
@@ -56,10 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     console.log('Project table populated.');
   }
-
-  // Fetch and display data on load
-  fetchYarnData();
-  fetchProjectData();
 
   // Toggle form visibility
   const formToggleButton = document.querySelector('.collapsible');
@@ -96,12 +129,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
         console.log('Submitting form data...');
-        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects:append?valueInputOption=RAW&key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+        const response = await gapi.client.sheets.spreadsheets.values.append({
+          spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+          range: 'SSmithProjects',
+          valueInputOption: 'RAW',
+          resource: {
             values: [
               [
                 data['project-name'],
@@ -130,17 +162,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 data['tags'],
               ],
             ],
-          }),
+          },
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
           console.log('Form data submitted successfully.');
           alert('Project added successfully');
           fetchProjectData(); // Refresh the project list
           event.target.reset(); // Reset the form
         } else {
-          const errorText = await response.text();
-          console.error('Error response:', errorText); // Debugging: Log error response
+          console.error('Error response:', response); // Debugging: Log error response
           alert('Error adding project');
         }
       } catch (error) {
