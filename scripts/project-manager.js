@@ -1,54 +1,63 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM fully loaded and parsed');
 
-  // Load the Google API client library
-  gapi.load('client:auth2', initClient);
+  let tokenClient;
+  let accessToken = null;
 
   function initClient() {
-    gapi.client.init({
-      apiKey: 'AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8',
-      clientId: '1058604367745-v8mu9pbdpicgn5m20rqho8si5n1qof9n.apps.googleusercontent.com',
-      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: '1058604367745-v8mu9pbdpicgn5m20rqho8si5n1qof9n.apps.googleusercontent.com',
       scope: 'https://www.googleapis.com/auth/spreadsheets',
-    }).then(function () {
-      // Listen for sign-in state changes.
-      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-      // Handle the initial sign-in state.
-      updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    }, function(error) {
-      console.error('Error initializing Google API client:', error);
+      callback: (tokenResponse) => {
+        accessToken = tokenResponse.access_token;
+        fetchYarnData();
+        fetchProjectData();
+      },
     });
+
+    document.getElementById('authorize_button').onclick = () => {
+      tokenClient.requestAccessToken();
+    };
   }
 
-  function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
-      console.log('User is signed in');
-      fetchYarnData();
-      fetchProjectData();
-    } else {
-      console.log('User is not signed in');
-      gapi.auth2.getAuthInstance().signIn();
+  function fetchYarnData() {
+    if (!accessToken) {
+      console.error('Access token is not available');
+      return;
     }
-  }
 
-  // Fetch yarn data from the server
-  async function fetchYarnData() {
-    try {
-      console.log('Fetching yarn data...');
-      const response = await gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
-        range: 'SSmithYarn',
-      });
+    gapi.client.setToken({ access_token: accessToken });
+    gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+      range: 'SSmithYarn',
+    }).then(response => {
       const data = response.result;
       console.log('Yarn data fetched:', data);
       populateYarnDropdown(data.values);
-    } catch (error) {
+    }).catch(error => {
       console.error('Error fetching yarn data:', error);
-    }
+    });
   }
 
-  // Populate the yarn dropdown with data
+  function fetchProjectData() {
+    if (!accessToken) {
+      console.error('Access token is not available');
+      return;
+    }
+
+    gapi.client.setToken({ access_token: accessToken });
+    gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+      range: 'SSmithProjects',
+    }).then(response => {
+      const data = response.result;
+      console.log('Project data fetched:', data);
+      populateProjectTable(data.values);
+    }).catch(error => {
+      console.error('Error fetching project data:', error);
+    });
+  }
+
   function populateYarnDropdown(rows) {
     console.log('Populating yarn dropdown...');
     const yarnDropdown = document.querySelector('#yarn-used');
@@ -61,23 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Yarn dropdown populated.');
   }
 
-  // Fetch project data from the server
-  async function fetchProjectData() {
-    try {
-      console.log('Fetching project data...');
-      const response = await gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
-        range: 'SSmithProjects',
-      });
-      const data = response.result;
-      console.log('Project data fetched:', data);
-      populateProjectTable(data.values);
-    } catch (error) {
-      console.error('Error fetching project data:', error);
-    }
-  }
-
-  // Populate the project table with data
   function populateProjectTable(rows) {
     console.log('Populating project table...');
     const projectTableBody = document.querySelector('#projectTable tbody');
@@ -127,44 +119,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
       console.log('Form data:', data); // Debugging: Log form data
 
-      try {
-        console.log('Submitting form data...');
-        const response = await gapi.client.sheets.spreadsheets.values.append({
-          spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
-          range: 'SSmithProjects',
-          valueInputOption: 'RAW',
-          resource: {
-            values: [
-              [
-                data['project-name'],
-                data['project-type'],
-                data['start-date'],
-                data['completion-date'],
-                data['status'],
-                data['deadline'],
-                data['pattern-name'],
-                data['pattern-source'],
-                data['pattern-designer'],
-                data['pattern-notes'],
-                data['yarn-used'],
-                data['hook-size'],
-                data['other-tools'],
-                data['rows-completed'],
-                data['time-spent'],
-                data['photo-gallery'],
-                data['step-notes'],
-                data['color-palette'],
-                data['gauge-swatch-info'],
-                data['custom-modifications'],
-                data['recipient'],
-                data['budget'],
-                data['difficulty-level'],
-                data['tags'],
-              ],
-            ],
-          },
-        });
+      if (!accessToken) {
+        console.error('Access token is not available');
+        return;
+      }
 
+      gapi.client.setToken({ access_token: accessToken });
+      gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+        range: 'SSmithProjects',
+        valueInputOption: 'RAW',
+        resource: {
+          values: [
+            [
+              data['project-name'],
+              data['project-type'],
+              data['start-date'],
+              data['completion-date'],
+              data['status'],
+              data['deadline'],
+              data['pattern-name'],
+              data['pattern-source'],
+              data['pattern-designer'],
+              data['pattern-notes'],
+              data['yarn-used'],
+              data['hook-size'],
+              data['other-tools'],
+              data['rows-completed'],
+              data['time-spent'],
+              data['photo-gallery'],
+              data['step-notes'],
+              data['color-palette'],
+              data['gauge-swatch-info'],
+              data['custom-modifications'],
+              data['recipient'],
+              data['budget'],
+              data['difficulty-level'],
+              data['tags'],
+            ],
+          ],
+        },
+      }).then(response => {
         if (response.status === 200) {
           console.log('Form data submitted successfully.');
           alert('Project added successfully');
@@ -174,12 +169,15 @@ document.addEventListener('DOMContentLoaded', function() {
           console.error('Error response:', response); // Debugging: Log error response
           alert('Error adding project');
         }
-      } catch (error) {
+      }).catch(error => {
         console.error('Error adding project:', error);
         alert('Error adding project');
-      }
+      });
     });
   } else {
     console.error('Project form not found');
   }
+
+  // Initialize the client
+  initClient();
 });
