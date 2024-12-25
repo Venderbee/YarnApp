@@ -62,78 +62,93 @@ document.addEventListener('DOMContentLoaded', function() {
   fetchProjectData();
 
   // Toggle form visibility
-  document.querySelector('.collapsible').addEventListener('click', function() {
-    const formContainer = document.querySelector('.form-container');
-    formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
-  });
+  const formToggleButton = document.querySelector('.collapsible');
+  if (formToggleButton) {
+    formToggleButton.addEventListener('click', function() {
+      const formContainer = document.querySelector('.form-container');
+      formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+    });
+  } else {
+    console.error('Form toggle button not found');
+  }
 
   // Toggle table visibility
-  document.querySelectorAll('.collapsible')[1].addEventListener('click', function() {
-    const tableContainer = document.querySelector('.table-container');
-    tableContainer.style.display = tableContainer.style.display === 'none' ? 'block' : 'none';
-  });
+  const tableToggleButton = document.querySelectorAll('.collapsible')[1];
+  if (tableToggleButton) {
+    tableToggleButton.addEventListener('click', function() {
+      const tableContainer = document.querySelector('.table-container');
+      tableContainer.style.display = tableContainer.style.display === 'none' ? 'block' : 'none';
+    });
+  } else {
+    console.error('Table toggle button not found');
+  }
 
   // Handle form submission
-  document.querySelector('#project-form').addEventListener('submit', async function(event) {
-    event.preventDefault();
-    console.log('Form submission prevented');
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
+  const projectForm = document.querySelector('#project-form');
+  if (projectForm) {
+    projectForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      console.log('Form submission prevented');
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
 
-    console.log('Form data:', data); // Debugging: Log form data
+      console.log('Form data:', data); // Debugging: Log form data
 
-    try {
-      console.log('Submitting form data...');
-      const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects:append?valueInputOption=RAW&key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          values: [
-            [
-              data['project-name'],
-              data['project-type'],
-              data['start-date'],
-              data['completion-date'],
-              data['status'],
-              data['deadline'],
-              data['pattern-name'],
-              data['pattern-source'],
-              data['pattern-designer'],
-              data['pattern-notes'],
-              data['yarn-used'],
-              data['hook-size'],
-              data['other-tools'],
-              data['rows-completed'],
-              data['time-spent'],
-              data['photo-gallery'],
-              data['step-notes'],
-              data['color-palette'],
-              data['gauge-swatch-info'],
-              data['custom-modifications'],
-              data['recipient'],
-              data['budget'],
-              data['difficulty-level'],
-              data['tags'],
+      try {
+        console.log('Submitting form data...');
+        const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects:append?valueInputOption=RAW&key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            values: [
+              [
+                data['project-name'],
+                data['project-type'],
+                data['start-date'],
+                data['completion-date'],
+                data['status'],
+                data['deadline'],
+                data['pattern-name'],
+                data['pattern-source'],
+                data['pattern-designer'],
+                data['pattern-notes'],
+                data['yarn-used'],
+                data['hook-size'],
+                data['other-tools'],
+                data['rows-completed'],
+                data['time-spent'],
+                data['photo-gallery'],
+                data['step-notes'],
+                data['color-palette'],
+                data['gauge-swatch-info'],
+                data['custom-modifications'],
+                data['recipient'],
+                data['budget'],
+                data['difficulty-level'],
+                data['tags'],
+              ],
             ],
-          ],
-        }),
-      });
+          }),
+        });
 
-      if (response.ok) {
-        console.log('Form data submitted successfully.');
-        alert('Project added successfully');
-        fetchProjectData(); // Refresh the project list
-        event.target.reset(); // Reset the form
-      } else {
-        const errorText = await response.text();
-        console.error('Error response:', errorText); // Debugging: Log error response
+        if (response.ok) {
+          console.log('Form data submitted successfully.');
+          alert('Project added successfully');
+          fetchProjectData(); // Refresh the project list
+          event.target.reset(); // Reset the form
+        } else {
+          const errorText = await response.text();
+          console.error('Error response:', errorText); // Debugging: Log error response
+          alert('Error adding project');
+        }
+      } catch (error) {
+        console.error('Error adding project:', error);
         alert('Error adding project');
       }
-    } catch (error) {
-      console.error('Error adding project:', error);
-      alert('Error adding project');
-    }
-  });
+    });
+  } else {
+    console.error('Project form not found');
+  }
 });
