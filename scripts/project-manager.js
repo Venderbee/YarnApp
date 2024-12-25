@@ -179,5 +179,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Initialize the client
-  initClient();
+  window.onload = initClient;
 });
