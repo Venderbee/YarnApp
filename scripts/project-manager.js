@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM fully loaded and parsed');
+
   // Fetch yarn data from the server
   async function fetchYarnData() {
     try {
@@ -65,10 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
     formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
   });
 
+  // Toggle table visibility
+  document.querySelectorAll('.collapsible')[1].addEventListener('click', function() {
+    const tableContainer = document.querySelector('.table-container');
+    tableContainer.style.display = tableContainer.style.display === 'none' ? 'block' : 'none';
+  });
 
   // Handle form submission
   document.querySelector('#project-form').addEventListener('submit', async function(event) {
     event.preventDefault();
+    console.log('Form submission prevented');
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 

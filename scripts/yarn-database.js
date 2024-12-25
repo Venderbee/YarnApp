@@ -39,11 +39,6 @@ document.querySelector('.collapsible').addEventListener('click', function() {
   formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
 });
 
-// Toggle table visibility
-document.querySelectorAll('.collapsible')[1].addEventListener('click', function() {
-  const tableContainer = document.querySelector('.table-container');
-  tableContainer.style.display = tableContainer.style.display === 'none' ? 'block' : 'none';
-});
 
 // Handle form submission
 document.querySelector('#yarn-form').addEventListener('submit', async function(event) {
@@ -91,3 +86,4 @@ document.querySelector('#yarn-form').addEventListener('submit', async function(e
     alert('Error adding yarn');
   }
 });
+
