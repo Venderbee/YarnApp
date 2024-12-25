@@ -85,7 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
   filterColorInput.addEventListener('input', filterTable);
   filterQuantityInput.addEventListener('input', filterTable);
   searchYarnInput.addEventListener('input', filterTable);
-  // Fetch data from the server
+});
+
+// Fetch data from the server
 async function fetchYarnData() {
   try {
     const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/YOUR_SPREADSHEET_ID/values/SSmithYarn?key=YOUR_API_KEY');
@@ -165,5 +167,4 @@ document.querySelector('#yarn-form').addEventListener('submit', async function(e
     console.error('Error adding yarn:', error);
     alert('Error adding yarn');
   }
-});
 });
