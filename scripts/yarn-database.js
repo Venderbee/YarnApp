@@ -1,96 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const yarnForm = document.getElementById('yarn-form');
-  const yarnDatabaseTableBody = document.querySelector('#yarn-database-table tbody');
-  const filterNameInput = document.getElementById('filter-name');
-  const filterColorInput = document.getElementById('filter-color');
-  const filterQuantityInput = document.getElementById('filter-quantity');
-  const searchYarnInput = document.getElementById('search-yarn');
-  const userId = 'unique-user-id'; // Replace with a unique identifier for the user
-
-  // Load yarn data from Cloudflare KV
-  fetch(`https://yarnworker.workers.dev/load?userId=${userId}`)
-    .then(response => response.json())
-    .then(savedYarnData => {
-      savedYarnData.forEach(yarn => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${yarn.name}</td>
-          <td>${yarn.color}</td>
-          <td>${yarn.quantity}</td>
-        `;
-        yarnDatabaseTableBody.appendChild(row);
-      });
-    });
-
-  yarnForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const yarnName = document.getElementById('yarn-name').value;
-    const yarnColor = document.getElementById('yarn-color').value;
-    const yarnQuantity = document.getElementById('yarn-quantity').value;
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${yarnName}</td>
-      <td>${yarnColor}</td>
-      <td>${yarnQuantity}</td>
-    `;
-    yarnDatabaseTableBody.appendChild(row);
-
-    // Save yarn data to Cloudflare KV
-    const yarnData = {
-      name: yarnName,
-      color: yarnColor,
-      quantity: yarnQuantity
-    };
-    fetch(`https://yarnworker.workers.dev/save`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ userId, yarnData })
-    });
-
-    yarnForm.reset();
-  });
-
-  // Filter function
-  function filterTable() {
-    const filterName = filterNameInput.value.toLowerCase();
-    const filterColor = filterColorInput.value.toLowerCase();
-    const filterQuantity = filterQuantityInput.value;
-    const searchYarn = searchYarnInput.value.toLowerCase();
-
-    const rows = yarnDatabaseTableBody.getElementsByTagName('tr');
-    Array.from(rows).forEach(row => {
-      const nameCell = row.cells[0].textContent.toLowerCase();
-      const colorCell = row.cells[1].textContent.toLowerCase();
-      const quantityCell = row.cells[2].textContent;
-
-      const matchesName = nameCell.includes(filterName);
-      const matchesColor = colorCell.includes(filterColor);
-      const matchesQuantity = filterQuantity === '' || quantityCell === filterQuantity;
-      const matchesSearch = nameCell.includes(searchYarn) || colorCell.includes(searchYarn) || quantityCell.includes(searchYarn);
-
-      if (matchesName && matchesColor && matchesQuantity && matchesSearch) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
-      }
-    });
-  }
-
-  // Add event listeners for filter inputs
-  filterNameInput.addEventListener('input', filterTable);
-  filterColorInput.addEventListener('input', filterTable);
-  filterQuantityInput.addEventListener('input', filterTable);
-  searchYarnInput.addEventListener('input', filterTable);
-});
-
-// Fetch data from the server
+// Fetch data from the servers
 async function fetchYarnData() {
   try {
-    const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/YOUR_SPREADSHEET_ID/values/SSmithYarn?key=YOUR_API_KEY');
+    const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithYarn?key=MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDBj3lhnAOMYI86\n8TcoSj2J65XVTtc2T1a+pSN6gJr6b9AWdJXX72kaFWPaXRd5zBKFNigFVAcm3sPZ\nYXAkEDB63H/XDPHofejL+nZEa3/or1Mxcj/DoNEfhdj24hIGqN2X8FvBept0v0AL\nh6vayythO4jtzJ5sCVj24HUaLYgJh8mgh3MNNJw4+porUxd1TgOVGEuRU1H3zvC6\nW1qdm8hUCwgI2TzdXx9iC2aCDgjnXktDpQ+4nmFvg8BkjjZ7Y8BbdA3HE0qlW2L/\nx7hZjPeXgB2JCRhU+66ViV0hITiuyZ1L7eaZ8yxJ+jJj4uiPnONx+14ZUfj0oIui\nZ1sJbhGjAgMBAAECggEAB/VEqdE2yiI8MVGykVsADbgcaHE94vM/H0Z9328DMDHB\nrfKsKH0k5pgji1pReUX9KvHvkkyCoMP+7GSXrjvmKl7/eJGFLqhilmRdUXHUB/aR\nZpKKcZoejvu7UGc6E4EE31bYBuvqEVI9qVuyIqRAy9YdSp2jk9CMklXnKqTdl3ql\n0pXh6ktrxPUX/S1kEooy16toyFhK+NJhAvgXLaJlGcVZ9U1BAGnRe3UNdwyGJ2T6\nVY4CBx0aFBZDAiAg4lGyiotp+HGeAS0/ZQ+lbdPGY1TaSzVCxtU412DbHg05mccE\n7zbOT6PMtuvVIBquIDZhlwcr8zP3NqMshhNrM7fckQKBgQD4jzSHfbNBOKV8koyU\n/DbCuv1i3V9k71PZiXkD6Jgsc/pSaF5stTv6KE6Ux6l2ZCXBnU4WVDQhWY9xXGn9\nI3zwT4jjjOdNneqSeM1nK3l7nddcZt3OwCYKMxIvEzEmS8Saz/OGAljruXqwZu04\no9EBJiCQG+sZ3W16gyzA07mnUQKBgQDHWssbDEROeMTBabXP3SgIknHkyI/+mUmn\nkhFmvfxFWrnBTGCP3iSUmL4b96yd69wq+Il2mgjxix1kChOAaiKuY/7gtEv2rt5y\niN/DYe5pGyBz+x2PZ1NefxeBw/0e+aTXVA077JO14Pc2v12CbBrCeiV7uXqX95KI\n84fRWV/UswKBgDoWnZwckEvpxSL7zMb0uod/07/LJIQeOmZYbmOvdADPiezAX3Dg\nWgf4a4TxtHTqqrg43wrw2s4AdDl1838pUAWJUOB9CYFmKm/Ys4gs7NMq7C24DJZI\n6ZrwnItL3OyqQGQ9vRfQbJ+KVVXsd/wIrMur8Wg8XhFJYlCDX24hDP5BAoGAMojU\ndZ3Nbur0TWcjnHaeYFXnIyyoO8zVu/GuEZJVcatG7TYUQEP6l+SERIirLDkOzaHF\nDtiLLdeq8qIPQX0mH3jfskxh+T1ozDXgKyIXEnO67UuZubFik9C5v75T2tdDrwXy\neN9GrlNBt5IY/Se0PNpDyDJDXmR2s9qv8iSqwzsCgYEAo+H3xBEoqo2DHjUMUQ/C\nxCVyOfx46x1TwYLaiubn+YXcFloeNJ/8CbeiIqN6DXNcuURf6Bz1vYkDJ2P8Rhsm\n+bTNSuh8W1Mw1ekuND10clvW4/96e4PmNZ1P6AWE6cDnontmphPAh8oK3pOmBpEo\nuDNsAaAxiX07+eY9W6aUMkU=');
     const data = await response.json();
     populateYarnTable(data.values);
   } catch (error) {
@@ -129,7 +40,7 @@ document.querySelector('#yarn-form').addEventListener('submit', async function(e
   const data = Object.fromEntries(formData.entries());
 
   try {
-    const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/YOUR_SPREADSHEET_ID/values/SSmithYarn:append?valueInputOption=RAW&key=YOUR_API_KEY', {
+    const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithYarn:append?valueInputOption=RAW&key=MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDBj3lhnAOMYI86\n8TcoSj2J65XVTtc2T1a+pSN6gJr6b9AWdJXX72kaFWPaXRd5zBKFNigFVAcm3sPZ\nYXAkEDB63H/XDPHofejL+nZEa3/or1Mxcj/DoNEfhdj24hIGqN2X8FvBept0v0AL\nh6vayythO4jtzJ5sCVj24HUaLYgJh8mgh3MNNJw4+porUxd1TgOVGEuRU1H3zvC6\nW1qdm8hUCwgI2TzdXx9iC2aCDgjnXktDpQ+4nmFvg8BkjjZ7Y8BbdA3HE0qlW2L/\nx7hZjPeXgB2JCRhU+66ViV0hITiuyZ1L7eaZ8yxJ+jJj4uiPnONx+14ZUfj0oIui\nZ1sJbhGjAgMBAAECggEAB/VEqdE2yiI8MVGykVsADbgcaHE94vM/H0Z9328DMDHB\nrfKsKH0k5pgji1pReUX9KvHvkkyCoMP+7GSXrjvmKl7/eJGFLqhilmRdUXHUB/aR\nZpKKcZoejvu7UGc6E4EE31bYBuvqEVI9qVuyIqRAy9YdSp2jk9CMklXnKqTdl3ql\n0pXh6ktrxPUX/S1kEooy16toyFhK+NJhAvgXLaJlGcVZ9U1BAGnRe3UNdwyGJ2T6\nVY4CBx0aFBZDAiAg4lGyiotp+HGeAS0/ZQ+lbdPGY1TaSzVCxtU412DbHg05mccE\n7zbOT6PMtuvVIBquIDZhlwcr8zP3NqMshhNrM7fckQKBgQD4jzSHfbNBOKV8koyU\n/DbCuv1i3V9k71PZiXkD6Jgsc/pSaF5stTv6KE6Ux6l2ZCXBnU4WVDQhWY9xXGn9\nI3zwT4jjjOdNneqSeM1nK3l7nddcZt3OwCYKMxIvEzEmS8Saz/OGAljruXqwZu04\no9EBJiCQG+sZ3W16gyzA07mnUQKBgQDHWssbDEROeMTBabXP3SgIknHkyI/+mUmn\nkhFmvfxFWrnBTGCP3iSUmL4b96yd69wq+Il2mgjxix1kChOAaiKuY/7gtEv2rt5y\niN/DYe5pGyBz+x2PZ1NefxeBw/0e+aTXVA077JO14Pc2v12CbBrCeiV7uXqX95KI\n84fRWV/UswKBgDoWnZwckEvpxSL7zMb0uod/07/LJIQeOmZYbmOvdADPiezAX3Dg\nWgf4a4TxtHTqqrg43wrw2s4AdDl1838pUAWJUOB9CYFmKm/Ys4gs7NMq7C24DJZI\n6ZrwnItL3OyqQGQ9vRfQbJ+KVVXsd/wIrMur8Wg8XhFJYlCDX24hDP5BAoGAMojU\ndZ3Nbur0TWcjnHaeYFXnIyyoO8zVu/GuEZJVcatG7TYUQEP6l+SERIirLDkOzaHF\nDtiLLdeq8qIPQX0mH3jfskxh+T1ozDXgKyIXEnO67UuZubFik9C5v75T2tdDrwXy\neN9GrlNBt5IY/Se0PNpDyDJDXmR2s9qv8iSqwzsCgYEAo+H3xBEoqo2DHjUMUQ/C\nxCVyOfx46x1TwYLaiubn+YXcFloeNJ/8CbeiIqN6DXNcuURf6Bz1vYkDJ2P8Rhsm\n+bTNSuh8W1Mw1ekuND10clvW4/96e4PmNZ1P6AWE6cDnontmphPAh8oK3pOmBpEo\nuDNsAaAxiX07+eY9W6aUMkU=', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
