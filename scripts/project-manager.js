@@ -64,10 +64,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Handle form submission
-  document.querySelector('#project-form').addEventListener('click', async function(event) {
+  document.querySelector('#project-form').addEventListener('submit', async function(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
+
+    console.log('Form data:', data); // Debugging: Log form data
 
     try {
       const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects:append?valueInputOption=RAW&key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8', {
@@ -112,6 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchProjectData(); // Refresh the project list
         event.target.reset(); // Reset the form
       } else {
+        const errorText = await response.text();
+        console.error('Error response:', errorText); // Debugging: Log error response
         alert('Error adding project');
       }
     } catch (error) {
