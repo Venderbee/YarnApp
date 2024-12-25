@@ -1,12 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Fetch data from the server
+  // Fetch yarn data from the server
+  async function fetchYarnData() {
+    try {
+      const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithYarn?key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8');
+      const data = await response.json();
+      populateYarnDropdown(data.values);
+    } catch (error) {
+      console.error('Error fetching yarn data:', error);
+    }
+  }
+
+  // Populate the yarn dropdown with data
+  function populateYarnDropdown(rows) {
+    const yarnDropdown = document.querySelector('#yarn-used');
+    rows.slice(1).forEach(row => { // Skip the first row (headers)
+      const option = document.createElement('option');
+      option.value = row[0]; // Assuming the first column is the yarn ID or name
+      option.textContent = `${row[0]} - ${row[1]}`; // Display yarn brand and sub-brand
+      yarnDropdown.appendChild(option);
+    });
+  }
+
+  // Fetch project data from the server
   async function fetchProjectData() {
     try {
       const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects?key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8');
       const data = await response.json();
       populateProjectTable(data.values);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching project data:', error);
     }
   }
 
@@ -26,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Fetch and display data on load
+  fetchYarnData();
   fetchProjectData();
 
   // Toggle form visibility
