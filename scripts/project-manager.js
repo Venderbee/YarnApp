@@ -15,9 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
       },
     });
 
-    document.getElementById('authorize_button').onclick = () => {
-      tokenClient.requestAccessToken();
-    };
+    const authorizeButton = document.getElementById('authorize_button');
+    if (authorizeButton) {
+      authorizeButton.onclick = () => {
+        tokenClient.requestAccessToken();
+      };
+    } else {
+      console.error('Authorize button not found');
+    }
   }
 
   function fetchYarnData() {
