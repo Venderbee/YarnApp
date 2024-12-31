@@ -15,6 +15,23 @@ async function fetchProjectData() {
   }
 }
 
+// Fetch data from the server
+async function fetchYarnData() {
+  try {
+    const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithYarn?key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    if (!data.values) {
+      throw new Error('No data found in the response');
+    }
+    populateYarnDropdown(data.values);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
 
 // Populate the project table with data
 function populateProjectTable(rows) {
@@ -33,6 +50,19 @@ function populateProjectTable(rows) {
 
 // Fetch and display data on load
 fetchProjectData();
+
+function populateYarnDropdown(rows) {
+  console.log('Populating yarn dropdown...');
+  const yarnDropdown = document.querySelector('#yarn-used');
+  yarnDropdown.innerHTML = ''; // Clear existing options
+  rows.slice(1).forEach(row => { // Skip the first row (headers)
+    const option = document.createElement('option');
+    option.value = row[0]; // Assuming the first column is the yarn ID or name
+    option.textContent = `${row[0]} - ${row[1]}`; // Display yarn brand and sub-brand
+    yarnDropdown.appendChild(option);
+  });
+  console.log('Yarn dropdown populated.');
+}
 
 // Toggle form visibility
 document.querySelector('.collapsible').addEventListener('click', function() {
