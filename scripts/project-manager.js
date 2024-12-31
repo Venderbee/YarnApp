@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function initClient() {
     tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: '1058604367745-v8mu9pbdpicgn5m20rqho8si5n1qof9n.apps.googleusercontent.com',
+      client_id: 'YOUR_CLIENT_ID',
       scope: 'https://www.googleapis.com/auth/spreadsheets',
       callback: (tokenResponse) => {
         accessToken = tokenResponse.access_token;
@@ -31,10 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      console.error('User is not logged in');
+      window.location.href = 'login.html';
+      return;
+    }
+
     gapi.client.setToken({ access_token: accessToken });
     gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
-      range: 'SSmithYarn',
+      spreadsheetId: 'YOUR_SPREADSHEET_ID',
+      range: `${user.email}_YarnStash`,
     }).then(response => {
       const data = response.result;
       console.log('Yarn data fetched:', data);
@@ -52,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     gapi.client.setToken({ access_token: accessToken });
     gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+      spreadsheetId: 'YOUR_SPREADsheet_ID',
       range: 'SSmithProjects',
     }).then(response => {
       const data = response.result;
@@ -102,7 +109,16 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('Form toggle button not found');
   }
 
-
+  // Toggle table visibility
+  const tableToggleButton = document.querySelectorAll('.collapsible')[1];
+  if (tableToggleButton) {
+    tableToggleButton.addEventListener('click', function() {
+      const tableContainer = document.querySelector('.table-container');
+      tableContainer.style.display = tableContainer.style.display === 'none' ? 'block' : 'none';
+    });
+  } else {
+    console.error('Table toggle button not found');
+  }
 
   // Handle form submission
   const projectForm = document.querySelector('#project-form');
@@ -122,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       gapi.client.setToken({ access_token: accessToken });
       gapi.client.sheets.spreadsheets.values.append({
-        spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+        spreadsheetId: 'YOUR_SPREADSHEET_ID',
         range: 'SSmithProjects',
         valueInputOption: 'RAW',
         resource: {
