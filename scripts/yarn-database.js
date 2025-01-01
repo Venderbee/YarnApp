@@ -1,3 +1,28 @@
+let tokenClient;
+let accessToken = null;
+
+function initClient() {
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: 'YOUR_CLIENT_ID',
+    scope: 'https://www.googleapis.com/auth/spreadsheets',
+    callback: (tokenResponse) => {
+      accessToken = tokenResponse.access_token;
+      fetchYarnData();
+      fetchProjectData();
+    },
+  });
+
+
+  const authorizeButton = document.getElementById('authorize_button');
+    if (authorizeButton) {
+      authorizeButton.onclick = () => {
+        tokenClient.requestAccessToken();
+      };
+    } else {
+      console.error('Authorize button not found');
+    }
+  }
+
 // Fetch data from the server
 async function fetchYarnData() {
   try {

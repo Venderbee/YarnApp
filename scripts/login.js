@@ -8,7 +8,7 @@ function handleCredentialResponse(response) {
   localStorage.setItem('user', JSON.stringify(user));
 
   // Redirect to the project manager page
-  window.location.href = 'project-manager.html';
+  window.location.href = 'index.html';
 }
 
 function parseJwt(token) {
