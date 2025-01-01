@@ -33,8 +33,8 @@ document.getElementById('register-form').addEventListener('submit', async functi
   // Initialize the Google API client
   gapi.load('client:auth2', async () => {
     await gapi.client.init({
-      apiKey: 'YOUR_API_KEY',
-      clientId: 'YOUR_CLIENT_ID',
+      apiKey: 'AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8',
+      clientId: '1058604367745-v8mu9pbdpicgn5m20rqho8si5n1qof9n.apps.googleusercontent.com',
       discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
       scope: 'https://www.googleapis.com/auth/spreadsheets',
     });
@@ -42,7 +42,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
     // Create new sheets for the user
     try {
       const batchUpdateResponse = await gapi.client.sheets.spreadsheets.batchUpdate({
-        spreadsheetId: 'YOUR_SPREADSHEET_ID',
+        spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
         resource: {
           requests: [
             {
@@ -68,7 +68,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
 
         // Add the new user's information to the AccountRegistry sheet
         const appendResponse = await gapi.client.sheets.spreadsheets.values.append({
-          spreadsheetId: 'YOUR_SPREADSHEET_ID',
+          spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
           range: 'AccountRegistry',
           valueInputOption: 'RAW',
           resource: {
