@@ -8,7 +8,6 @@ function initClient() {
     callback: (tokenResponse) => {
       accessToken = tokenResponse.access_token;
       fetchYarnData();
-      fetchProjectData();
     },
   });
 
