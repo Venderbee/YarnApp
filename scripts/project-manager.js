@@ -102,7 +102,7 @@ document.querySelector('#project-form').addEventListener('submit', async functio
   const data = Object.fromEntries(formData.entries());
 
   try {
-    alert(formData);
+    alert(formData.entries);
     const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects:append?valueInputOption=RAW&key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8', {
       method: 'POST',
       headers: {
