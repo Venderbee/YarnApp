@@ -121,7 +121,6 @@ document.querySelector('#project-form').addEventListener('submit', async functio
             data['pattern-source'],
             data['pattern-designer'],
             data['pattern-notes'],
-            data['yarn-used'],
             data['hook-size'],
             data['other-tools'],
             data['rows-completed'],
