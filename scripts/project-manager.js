@@ -3,7 +3,7 @@ let accessToken = null;
 
 function initClient() {
   tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: 'YOUR_CLIENT_ID',
+    client_id: '1058604367745-v8mu9pbdpicgn5m20rqho8si5n1qof9n.apps.googleusercontent.com',
     scope: 'https://www.googleapis.com/auth/spreadsheets',
     callback: (tokenResponse) => {
       accessToken = tokenResponse.access_token;
@@ -102,6 +102,7 @@ document.querySelector('#project-form').addEventListener('submit', async functio
   const data = Object.fromEntries(formData.entries());
 
   try {
+    alert(formData);
     const response = await fetch('https://sheets.googleapis.com/v4/spreadsheets/16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I/values/SSmithProjects:append?valueInputOption=RAW&key=AIzaSyCGCJPVfn_TFRd26jxF8K8yKo1C-jVOpH8', {
       method: 'POST',
       headers: {
