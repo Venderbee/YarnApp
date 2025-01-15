@@ -21,6 +21,20 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 
+// Handle login form submission
+document.getElementById('login-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const data = Object.fromEntries(formData.entries());
+
+  // Here you would typically send the login data to your server for authentication
+  console.log('Login data:', data);
+
+  // For demonstration purposes, we'll just log the data and redirect to the project manager page
+  alert('Login successful!');
+  window.location.href = 'index.html';
+});
+
 // Handle registration form submission
 document.getElementById('register-form').addEventListener('submit', async function(event) {
   event.preventDefault();
