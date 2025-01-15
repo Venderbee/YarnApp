@@ -6,6 +6,7 @@
   <title>Login</title>
   <link rel="stylesheet" href="styles.css">
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com https://accounts.google.com; object-src 'self';">
+  <script src="../scripts/login.js"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -21,13 +22,13 @@
          data-callback="handleCredentialResponse"
          data-auto_prompt="false">
     </div>
-    <div class="g_id_signin"
-         data-type="standard"
-         data-shape="rectangular"
-         data-theme="outline"
-         data-text="sign_in_with"
-         data-size="large"
-         data-logo_alignment="left">
+    <div>
+      <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Login</button>
     </div>
     <hr>
     <h2>Create a New Account</h2>
@@ -42,6 +43,5 @@
   <footer>
     <p>&copy; 2024 Yarnivores</p>
   </footer>
-  <script src="../scripts/login.js"></script>
 </body>
 </html>
