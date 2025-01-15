@@ -23,17 +23,33 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Handle login form submission
-  document.getElementById('login-form').addEventListener('submit', function(event) {
+  document.getElementById('login-form').addEventListener('submit', async function(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
-    // Here you would typically send the login data to your server for authentication
-    console.log('Login data:', data);
+    // Fetch data from the AccountRegistry sheet
+    try {
+      const response = await gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: '16jODbEF0qWJLOgeCXJamc6Bv3HfoP9xevSBNwH-U4_I',
+        range: 'AccountRegistry',
+      });
 
-    // For demonstration purposes, we'll just log the data and redirect to the project manager page
-    alert('Login successful!');
-    window.location.href = 'index.html';
+      const rows = response.result.values;
+      const user = rows.find(row => row[0] === data.username && row[1] === data.password);
+
+      if (user) {
+        console.log('Login successful!');
+        alert('Login successful!');
+        window.location.href = 'index.html';
+      } else {
+        console.error('Invalid username or password');
+        alert('Invalid username or password');
+      }
+    } catch (error) {
+      console.error('Error fetching data from AccountRegistry:', error);
+      alert('Error logging in. Please try again.');
+    }
   });
 
   // Handle registration form submission
@@ -88,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
             valueInputOption: 'RAW',
             resource: {
               values: [
-                [data.username, data.email, new Date().toISOString()],
+                [data.username, data.password, new Date().toISOString()],
               ],
             },
           });
